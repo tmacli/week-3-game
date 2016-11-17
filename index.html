@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>The Psychic Game</title>
+</head>
+<body>
+  <h1>The Psychic Game</h1>
+  <p>Guess what letter I'm thinking of</p>
+  <div id="displayResults">
+  </div>
+
+<script type="text/javascript">
+
+  // 1. user picks a letter
+  // 2. computer generates a random letter
+  // 3. compare to see if the user's letter matches the computer generated random letter
+  // 4. Display results
+
+  var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  var computerChoice = options[Math.floor(Math.random()*options.length)];
+  var wins = 0;
+  var losses = 0;
+  var countGuesses = 9;
+  var guesses = [];
+  var display = document.querySelector("#displayResults");
+
+  function displayResults(results) {
+    var string = "";
+    string += "<p>Wins: " + wins; + "</p>";
+    string += "<p>Losses: " + losses; + "</p>";
+    string += "<p>Guesses left: " + countGuesses; + "</p>";
+    string += "<p>Your Guesses so far: " + guesses; + "</p>";
+    display.innerHTML = string;
+  }    
+
+      document.onkeyup = function(event) {
+        var key = event.key;
+          if ((key == "a") || (key == "b") || (key == "c") || (key == "d") || (key == "e") || (key == "f") || (key == "g") || (key == "h") || (key == "i") || (key == "j") || (key == "k") || (key == "l") || (key == "m") || (key == "n") || (key == "o") || (key == "p") || (key == "q") || (key == "r") || (key == "s") || (key == "t") || (key == "u") || (key == "v") || (key == "w") || (key == "x") || (key == "y") || (key == "z")) {
+            if (guesses.length < 9) {
+              guesses.push(key); //update the guesses that the user guessed
+              if (key == computerChoice) {
+                wins++;
+                console.log(computerChoice);
+                computerChoice = options[Math.floor(Math.random()*options.length)];
+                countGuesses = 9;
+                guesses = [];
+                displayResults();   
+              }
+              else if (key !== computerChoice) {
+                countGuesses--;
+                console.log(computerChoice);
+                displayResults();
+                if (countGuesses < 1) {
+                  losses++;
+                  computerChoice = options[Math.floor(Math.random()*options.length)];
+                  countGuesses = 9;
+                  guesses = [];
+                  displayResults();
+                }
+              }
+            }
+          }
+        }
+
+
+
+
+</script>    
+</body>
+</html>
